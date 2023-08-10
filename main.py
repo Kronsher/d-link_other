@@ -16,9 +16,13 @@ def connect_and_set_command(device, command, timeout=20):
         with telnetlib.Telnet(ip, timeout=timeout) as telnet:
             login = ""
             telnet.read_until(b'UserName:', timeout=5)
-            telnet.write(b'test\n')
-            telnet.write(b'admin\n')
+            telnet.write(b'manager\n')
+            telnet.write(b'Secure1qaZ\n')
             login += str(telnet.read_until(b'#', timeout=5))
+            login += str(telnet.read_until(b'user#', timeout=5))
+            if "user#" in login:
+                telnet.write(b'enable admin\n')
+                telnet.write(b'Secure1qaZ\n')
             telnet.write(b'\n')
             telnet.write(to_bytes(command))
             telnet.write(b'a')
@@ -55,9 +59,9 @@ if __name__ == "__main__":
     with ThreadPoolExecutor(max_workers=10) as executor:
         result = executor.map(connect_and_set_command, device, repeat('enable authen_policy\n'))
         print(result)
-        # date_1 = datetime.datetime.now()
-        # date = str(date_1).split()[0]
-        # for dev, output in zip(device, result):
-        #     print(dev, output)
-        #     with open(f'logs/{folder}/{dev["host"]}-{date}.txt', 'w', encoding='UTF-8') as f:
-        #         f.writelines(f"{output}")
+        date_1 = datetime.datetime.now()
+        date = str(date_1).split()[0]
+        for dev, output in zip(device, result):
+            print(dev, output)
+            with open(f'logs/{folder}/{dev["host"]}-{date}.txt', 'w', encoding='UTF-8') as f:
+                f.writelines(f"{output}")

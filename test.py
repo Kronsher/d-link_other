@@ -1,9 +1,8 @@
+import telnetlib
 import re
 import socket
-import telnetlib
 import time
-
-
+from pprint import pprint
 def connect_and_set_command(ip, timeout=20):
     try:
         with telnetlib.Telnet(ip, timeout=timeout) as telnet:
@@ -28,9 +27,9 @@ def connect_and_set_command(ip, timeout=20):
 
 if __name__ == "__main__":
 
-    regex = r'Device Type +: (\S+)'
-    regex1 = r'Firmware Version +: Build (\S+)'
-    regex2 = r'Firmware Version +: (\S+)'
+    regex = (r'Device Type +: (\S+)'
+            r'Firmware Version +: Build (\S+)'
+            r'Firmware Version +: (\S+)')
     try:
         with open("ip.txt") as file:
             for ip in file:
@@ -41,11 +40,7 @@ if __name__ == "__main__":
                 match = re.finditer(regex, result)
                 for m in match:
                     device_type = m.group(1)
-                match = re.finditer(regex1, result)
-                for m in match:
                     soft1 = m.group(1)
-                match = re.finditer(regex2, result)
-                for m in match:
                     soft2 = m.group(1)
                 if device_type == 'DES-3200-18' or 'DES-3200-28F' or 'DES-3200-28':
                     print(f"{dev_ip} {device_type} {soft1}")
