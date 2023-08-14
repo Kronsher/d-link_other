@@ -8,14 +8,14 @@ def connect_and_set_command(ip, timeout=20):
         with telnetlib.Telnet(ip, timeout=timeout) as telnet:
             login = ""
             telnet.read_until(b'UserName:', timeout=5)
-            telnet.write(b'manager\n')
-            telnet.write(b'Secure1qaZ\n')
+            telnet.write(b'username\n')
+            telnet.write(b'password\n')
             login += str(telnet.read_until(b'#', timeout=5))
             telnet.write(b'\n')
             telnet.write(b'config account admin\n')
             telnet.write(b'Intr1X\n')
-            telnet.write(b'CbvgjpbeV2005\n')
-            telnet.write(b'CbvgjpbeV2005\n')
+            telnet.write(b'Password_new\n')
+            telnet.write(b'Password_new\n')
             telnet.write(b'save\n')
             telnet.write(b'save all\n')
             time.sleep(40)
