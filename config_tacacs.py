@@ -9,7 +9,7 @@ def connect_and_set_command(ip, timeout=20):
             login = ""
             telnet.read_until(b'UserName:', timeout=5)
             telnet.write(b'admin\n')
-            telnet.write(b'Intr1X\n')
+            telnet.write(b'password\n')
             login += str(telnet.read_until(b'#', timeout=5))
             telnet.write(b'\n')
             telnet.write(b'enable ssh\n')
