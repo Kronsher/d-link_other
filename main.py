@@ -16,13 +16,13 @@ def connect_and_set_command(device, command, timeout=20):
         with telnetlib.Telnet(ip, timeout=timeout) as telnet:
             login = ""
             telnet.read_until(b'UserName:', timeout=5)
-            telnet.write(b'manager\n')
-            telnet.write(b'Secure1qaZ\n')
+            telnet.write(b'username\n')
+            telnet.write(b'password\n')
             login += str(telnet.read_until(b'#', timeout=5))
             login += str(telnet.read_until(b'user#', timeout=5))
             if "user#" in login:
                 telnet.write(b'enable admin\n')
-                telnet.write(b'Secure1qaZ\n')
+                telnet.write(b'password\n')
             telnet.write(b'\n')
             telnet.write(to_bytes(command))
             telnet.write(b'a')
