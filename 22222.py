@@ -16,7 +16,7 @@ def connect_and_set_command(ip, command):
         'device_type': 'dlink_ds',
         'ip': '172.16.111.2',
         'username': 'admin',
-        'password': 'Intr1X',
+        'password': 'password',
         'port': 22,
         'verbose': 'True',
         'session_timeout': 60,
